@@ -1,0 +1,444 @@
+{
+    "pointDefaultByPharse": [
+        {
+            "code": "PIM_PHS_CDREG",
+            "point": 5,
+            "mins": 12
+        },
+        {
+            "code": "PIM_PHS_CDFIN",
+            "point": 5,
+            "mins": 12
+        }
+    ],
+   
+    "memList": [
+        {
+            "userId": "vivo",
+            "fullName": "Vo Thi Thuy Vy",
+            "currentLevel": "Fsh",
+            "lvlCode": "FSH",
+            "pointOnHour": {
+                "standard": 25,
+                "expect": 19, //Jnr1
+                "description": ""
+            },
+            "role": ["test"],
+            "pointStandard": 13,
+            "workload": 1,
+            "teamLocal": [
+                "NEWFWD"
+            ]
+        },
+        {
+            "userId": "anhtd",
+            "fullName": "Anh Truong Dinh",
+            "currentLevel": "Fsh",
+            "lvlCode": "FSH",
+            "pointOnHour": {
+                "standard": 25,
+                "expect": 17,
+                "description": ""
+            },
+            "role": ["develop"],
+            "workload": 0.2, 
+            "pointStandard": 3,
+            "teamLocal": [
+                "NEWFWD"
+            ]
+        },
+        {
+            "userId": "trinhle",
+            "fullName": "Trinh Le",
+            "currentLevel": "Principal",
+            "lvlCode": "PRP",
+            "pointOnHour": {
+                "standard": 25,
+                "expect": 32,
+                "description": ""
+            },
+            "role": ["develop"],
+            "workload": 0.3, 
+            "pointStandard": 6,
+            "teamLocal": [
+                "NEWFWD"
+            ]
+        },
+        {
+            "userId": "thaito",
+            "fullName": "Thai To",
+            "currentLevel": "Junior 1",
+            "lvlCode": "JUN1",
+            "pointOnHour": {
+                "standard": 25,
+                "expect": 19,
+                "description": ""
+            },
+            "role": ["develop"],
+            "workload": 0.9, 
+            "pointStandard": 11,
+            "teamLocal": [
+                "NEWFWD"
+            ]
+        },
+        {
+            "userId": "haonn",
+            "fullName": "Hao Nguyen Nhat",
+            "currentLevel": "Jnr 1",
+            "lvlCode": "JUN1",
+            "pointOnHour": {
+                "standard": 25,
+                "expect": 19,
+                "description": ""
+            },
+            "role": ["develop"],
+            "workload": 1, 
+            "pointStandard": 13,
+            "teamLocal": [
+                "NEWFWD"
+            ]
+        },
+        {
+            "userId": "aopham",
+            "fullName": "Ao Pham",
+            "currentLevel": "Jnr 1",
+            "lvlCode": "JUN1",
+            "pointOnHour": {
+                "standard": 25,
+                "expect": 19,
+                "description": ""
+            },
+            "role": ["develop"],
+            "workload": 1, 
+            "pointStandard": 13,
+            "teamLocal": [
+                "NEWFWD"
+            ]
+        },
+        {
+            "userId": "phucnguyenhoang",
+            "fullName": "Phuc Hoang Nguyen",
+            "currentLevel": "Jnr 1 (+)",
+            "lvlCode": "JUN1",
+            "pointOnHour": {
+                "standard": 25,
+                "expect": 21,
+                "description": ""
+            },
+            "role": ["develop"],
+            "workload": 1, 
+            "pointStandard": 13,
+            "teamLocal": [
+                "NEWFWD"
+            ]
+        },
+        {
+            "userId": "phamvo",
+            "fullName": "Pham Vo",
+            "currentLevel": "Fsh",
+            "lvlCode": "FSH",
+            "pointOnHour": {
+                "standard": 25,
+                "expect": 19, //Junior 1
+                "description": ""
+            },
+            "role": ["tester"],
+            "workload": 1, 
+            "pointStandard": 13,
+            "teamLocal": [
+                "NEWFWD"
+            ]
+        },
+        {
+            "userId": "namnnguyen",
+            "fullName": "Nam Nguyen Ngoc",
+            "lvlCode": "TA",
+            "pointOnHour": {
+                "standard": 25,
+                "expect": 35,
+                "description": ""
+            },
+            "role": ["lead"],
+            "workload": 1, 
+            "pointStandard": 13,
+            "teamLocal": [
+                "NEWFWD"
+            ]
+        },
+        {
+            "userId": "sangng",
+            "fullName": "Nguyen Van Sang",
+            "currentLevel": "Jnr 1",
+            "lvlCode": "JUN1",
+            "pointOnHour": {
+                "standard": 17,
+                "expect": 19, //~ Jnr 2
+                "description": ""
+            },
+            "role": ["develop"],
+            "workload": 1, 
+            "pointStandard": 13,
+            "teamLocal": [
+                "NEWFWD"
+            ]
+        },
+        {
+            "userId": "thuanlai",
+            "fullName": "Thuan Lai",
+            "currentLevel": "Jnr 1", //2023-06-04: Up from Fsh -> Jun1
+            "lvlCode": "JUN1",
+            "pointOnHour": {
+                "standard": 17,
+                "expect": 19, //Jnr 1
+                "description": ""
+            },
+            "role": ["develop"],
+            "workload": 1, 
+            "pointStandard": 13,
+            "teamLocal": [
+                "NEWFWD"
+            ]
+        },
+        {
+            "userId": "namnph",
+            "fullName": "Nam Nguyen Phan Hoai",
+            "currentLevel": "Jnr 1",
+            "lvlCode": "JUN1",
+            "pointOnHour": {
+                "standard": 17,
+                "expect": 19, //Jnr 1
+                "description": ""
+            },
+            "role": ["develop"],
+            "workload": 1, 
+            "pointStandard": 13,
+            "teamLocal": [
+                "NEWFWD"
+            ]
+        },
+        {
+            "userId": "hieunt",
+            "fullName": "Hieu Nguyen",
+            "currentLevel": "Jnr 1",
+            "lvlCode": "JUN1",
+            "pointOnHour": {
+                "standard": 17,
+                "expect": 19, //Jnr 1
+                "description": ""
+            },
+            "role": ["develop"],
+            "workload": 0.85, 
+            "pointStandard": 13,
+            "teamLocal": [
+                "NEWFWD"
+            ]
+        },
+        {
+            "userId": "hiennguyen",
+            "fullName": "Hien Nguyen",
+            "lvlCode": "JUN1",
+            "pointOnHour": {
+                "standard": 25,
+                "expect": 25,
+                "description": ""
+            },
+            "role": ["develop"],
+            "workload": 1, 
+            "pointStandard": 13,
+            "teamLocal": [
+            ]
+        },
+        {
+            "userId": "duytrn",
+            "fullName": "Duy Tran Nhut",
+            "lvlCode": "JUN1",
+            "pointOnHour": {
+                "standard": 25,
+                "expect": 17,
+                "description": ""
+            },
+            "role": ["develop"],
+            "workload": 1, 
+            "pointStandard": 13,
+            "teamLocal": [
+            ]
+        },
+        {
+            "userId": "huynhnh",
+            "fullName": "Huynh Nguyen",
+            "lvlCode": "JUN1",
+            "pointOnHour": {
+                "standard": 25,
+                "expect": 17,
+                "description": ""
+            },
+            "role": ["develop"],
+            "workload": 1, 
+            "pointStandard": 13,
+            "teamLocal": [
+            ]
+        }
+    
+    ],
+    "effortPointCategory": ["Business", "UI Logic", "SQL", "UI Layout"],
+    "workingDay": {
+        "holidays": [
+          { "holidayDate": "20210902", "description": "Quoc Khanh" },
+          { "holidayDate": "20210903", "description": "Quoc Khanh" },
+          { "holidayDate": "20220103", "description": "Tet Duong Lich" },
+          { "holidayDate": "20230501", "description": "International Workers' Day" },
+          { "holidayDate": "20230502", "description": "Compensation Day (Liberation Day)" },
+          { "holidayDate": "20230503", "description": "Compensation Day (Hung Kings' Commemoration Day)" },
+          { "holidayDate": "20230901", "description": "National Day (Vietnam)" },
+          { "holidayDate": "20230902", "description": "National Day (Vietnam)" }
+          
+        ]
+    },
+    "levelList": [
+        {
+            "no": 1,
+            "code": "FSH",
+            "name": "Fresher",
+            "point": {
+                "min": 2000,
+                "max": 2800,
+                "gap": 800,
+                "taskLevelMax": 4,
+                "agvDay": 100,
+                "agvMonth": 2200
+            },
+            "description": "2000 ~ 2800"
+        },
+        {
+            "no": 2,
+            "code": "JUN1",
+            "name": "Junior 1",
+            "point": {
+                "min": 2700,
+                "max": 3600,
+                "gap": 900,
+                "taskLevelMax": 5,
+                "agvDay": 135,
+                "agvMonth": 2970
+            },
+            "description": "2700 ~ 3600"
+        },
+        {
+            "no": 3,
+            "code": "JUN2",
+            "name": "Junior 2",
+            "point": {
+                "min": 3500,
+                "max": 4300,
+                "gap": 800,
+                "taskLevelMax": 4,
+                "agvDay": 170,
+                "agvMonth": 3740
+            },
+            "description": "3500 ~ 4300"
+        },
+        {
+            "no": 4,
+            "code": "SEN1",
+            "name": "Senior 1",
+            "point": {
+                "min": 4200,
+                "max": 4900,
+                "gap": 700,
+                "taskLevelMax": 4,
+                "agvDay": 200,
+                "agvMonth": 4400
+            },
+            "description": "4200 ~ 4900"
+        },
+        {
+            "no": 5,
+            "code": "SEN2",
+            "name": "Senior 2",
+            "point": {
+                "min": 4700,
+                "max": 5400,
+                "gap": 700,
+                "taskLevelMax": 3,
+                "agvDay": 225,
+                "agvMonth": 4950
+            },
+            "description": "4700 ~ 5400"
+        },
+        {
+            "no": 6,
+            "code": "PRP",
+            "name": "Principal",
+            "point": {
+                "min": 5300,
+                "max": 5900,
+                "gap": 600,
+                "taskLevelMax": 3,
+                "agvDay": 250,
+                "agvMonth": 5500
+            },
+            "description": "5300 ~ 5900"
+        },
+        {
+            "no": 7,
+            "code": "TA",
+            "name": "Technical Architect",
+            "point": {
+                "min": 5800,
+                "max": 6300,
+                "gap": 500,
+                "taskLevelMax": 3,
+                "agvDay": 275,
+                "agvMonth": 6050
+            },
+            "description": "5800 ~ 6300"
+        },
+        {
+            "no": 8,
+            "code": "SENMGMT",
+            "name": "Senior Manager",
+            "point": {
+                "min": 6000,
+                "max": 6800,
+                "gap": 800,
+                "taskLevelMax": 4,
+                "agvDay": 300,
+                "agvMonth": 6600
+            },
+            "description": "6000 ~ 7000"
+        }
+    ],
+    "taskLevel": [
+        {
+            "label": "Standard",
+            "id": "lvl0",
+            "value": 0
+        },
+        {
+            "label": "Level 1",
+            "id": "lvl1",
+            "value": 1
+
+        },
+        {
+            "label": "Level 2",
+            "id": "lvl2",
+            "value": 2
+        },
+        {
+            "label": "Level 3",
+            "id": "lvl3",
+            "value": 3
+        },
+        {
+            "label": "Level 4",
+            "id": "lvl4",
+            "value": 4
+        },
+        {
+            "label": "Level 5",
+            "id": "lvl5",
+            "value": 5
+        }
+    ]
+}

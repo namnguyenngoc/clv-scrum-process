@@ -1,0 +1,191 @@
+#side-bar-extension-root {
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+}
+
+.table-container {
+  height: 20em;
+}
+.table-container-10 {
+  height: calc(20em-50px);
+}
+table.custom-scroll.custom-scroll {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  width: 100%;
+}
+table.custom-scroll thead {
+  /* head takes the height it requires, 
+  and it's not scaled when table.custom-scroll is resized */
+  flex: 0 0 auto;
+  width: calc(100% - 0.9em);
+}
+table.custom-scroll tbody {
+  /* body takes all the remaining available space */
+  flex: 1 1 auto;
+  display: block;
+  overflow-y: scroll;
+}
+table.custom-scroll tbody tr {
+  width: 100%;
+}
+table.custom-scroll thead,
+table.custom-scroll tbody tr {
+  display: table;
+  table-layout: fixed;
+}
+/* decorations */
+
+table.custom-scroll {
+  border: 1px solid lightgrey;
+}
+
+.w-170 {
+  width: 170px;
+}
+
+.w-100 {
+  width: 100px;
+}
+
+.w-70 {
+  width: 70px;
+}
+
+.w-150 {
+  width: 150px;
+}
+.pt-16 {
+  padding-top: 16px;
+}
+
+.pt-8 {
+  padding-top: 8px;
+}
+
+.ml-4 {
+  margin-left: 4px;
+}
+
+.comment {
+  word-wrap: break-word;
+}
+
+.system-comment {
+  color: #4f9bc5;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.bg-light-green {
+  background-color: lightgreen;
+}
+
+.bg-green {
+  background: green !important;
+}
+
+.main-layout {
+  /* width: 80%;
+  box-shadow: rgb(0 0 0 / 62%) 0px 0px 5px;
+  position: absolute;
+  left: 10%;
+  top: 5%;
+  height: 870px;
+  overflow: auto; */
+  /* width: 50px; */
+  box-shadow: rgb(0 0 0 / 62%) 0px 0px 5px;
+  /* height: 50px; */
+  background: transparent;  
+  top: 5px;
+  left: 240px;
+  width: 99%;
+  margin: 0 auto;
+  /* box-shadow: 0px 0px 5px #0000009e; */
+}
+.main-body {
+  bottom: 15px;
+  width: 600px;
+  height: 830px;
+  box-shadow: 0px 0px 5px #0000009e;
+  top: 120px;
+  right: 0;
+}
+.custom-button-expand {
+  height: 50px;
+  background: rgba(28,134,238,0.5);
+  border: 1px dotted;
+  border-color: rgba(28,134,238,1);
+}
+
+.border-hidden {
+  border-radius: 6px;
+  opacity: 0.8;
+}
+.border-hidden:hover {
+  opacity: 1;
+}
+
+.react-datepicker-wrapper .react-datepicker__input-container input {
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-align: center;
+  height: 36px;
+  border: 1px solid #dcdcdc;
+ 
+ }
+
+ tr.bg-misty, td.bg-misty {
+  background-color: #FFE4E1;
+ }
+ tr.bg-misty-2, td.bg-misty-2 {
+  background-color: #7FFFD4;
+ }
+
+ .bg-misty {
+  background-color: #FFE4E1;
+ }
+ .mr-4 {
+  margin-right: 4px;
+ }
+
+ .table-container-search {
+  height: 100px;
+}
+
+a.link {
+  color: blue;
+}
+
+div.ReactModalPortal .ReactModal__Overlay.ReactModal__Overlay--after-open {
+  z-index: 9999;
+  
+}
+
+div.ReactModalPortal .ReactModal__Content.ReactModal__Content--after-open {
+  background: transparent !important;
+  border: none !important;
+  overflow: hidden !important;
+}
+
+#side-bar-extension-root .overflow-hidden.main-body {
+  z-index: 9998;
+  top: 230px;
+  box-shadow: none;
+}
+
+.dsg-container {
+  height: 190px !important;
+  overflow: auto;
+}
+.dsg-add-row {
+  display: none !important;
+}
+
+.main-layout label, 
+.main-layout input,
+.main-layout textarea {
+  color: #000000 !important;
+}
