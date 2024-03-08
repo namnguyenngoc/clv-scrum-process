@@ -49,5 +49,10 @@ export const WEB_INFO = {
     API: 'https://api.clickup.com/api/v2',
     SPACE_ID: 26265831,
     
+  },
+  JIRA_PIM: {
+    AUTHEN: 'NDI0OTExOTUzMzkzOrAsjMwo8+PHifeyOU4j3LG7My8s',
+    API: 'https://pim.cyberlogitec.com',
+    
   }
 }

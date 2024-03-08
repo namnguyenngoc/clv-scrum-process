@@ -146,6 +146,7 @@ export default function MgmtProcess() {
   let [clickTaskInfo, setClickTaskInfo] = useState(null);
   let [isOpenConfirm, setIsOpenConfirm] = useState(false);
   let [clickupIDUrl, setClickupIDUrl] = useState(true);
+  let [iIsJira, setIsJira] = useState(false);
 
   const today = moment(new Date());
   const firstDayOfMonth = today.clone().startOf("month");
@@ -232,8 +233,37 @@ export default function MgmtProcess() {
     var holidays = count_holiday(start, end);
     return wfirst + Math.floor(days) + wlast - holidays; // get the total
   };   
+
+  //Jira
+  const jiraGetTicket = async () => {
+    if(iIsJira) {
+      const config = {
+        // ...REQ_HEADER.headersBear
+        withCredentials: true,
+        headers: { 
+          'Content-Type': 'application/json', 
+          'Authorization': WEB_INFO.JIRA_PIM.AUTHEN,
+        },
+      }
+      let _url = `${WEB_INFO.JIRA_PIM.API}/jira/rest/api/latest/issue/CALG-1802?_=1709867453037`;
+      const tasks = await axios.get(_url, config).then(async (res) => {
+        console.log("jiraGetTicket", res);
+       
+        // return res.data;
+      });
+    }
+
+    const requirementDetail = await  axios.get(`${url}/searchRequirementDetails?reqId=${reqId}`)
+    .then(async(res) => {
+        console.log("JIRA", res)
+    });
+
+  };
+
+  //End jira
   const searchRequirement = async () => {
     openModal();
+    jiraGetTicket();
        // https://blueprint.cyberlogitec.com.vn/api/uiPim001/searchRequirement
     //https://blueprint.cyberlogitec.com.vn/api/task-details/get-actual-effort-point?reqId=${lsReq[i].reqId}
     const requirementDetail = await  axios.get(`${url}/searchRequirementDetails?reqId=${reqId}`)
@@ -1441,6 +1471,7 @@ export default function MgmtProcess() {
     clickupGetTaskV2();
   }
   const clickupGetTaskV2 = async () => {
+    setLoading(true);
     if(clickID) {
       const config = {
         // ...REQ_HEADER.headersBear
@@ -1460,7 +1491,7 @@ export default function MgmtProcess() {
         setSubjectTask(__task.sub);
         setTaskFullDescription(__task.content);
         setClickTaskInfo(data);
-
+        setLoading(false);
         // return res.data;
       });
     }
@@ -1644,276 +1675,316 @@ export default function MgmtProcess() {
 
   return (
     <div className="grid grid-flow-row gap-3 sweet-loading">
-      <label
-        style={{
-            fontSize: 26
+      <form>
+        <div className="grid grid-flow-row px-2">
+        <label
+          style={{
+              fontSize: 26
+            }
           }
-        }
-      >
-        Task detail
-      </label>
-      
-      <div className="grid grid-flow-row">
-        <div className="grid grid-flow-col gap-1">
-          <div className="grid grid-flow-row gap-1">
-            <div className="grid grid-flow-col gap-1">
-              <label>
-                Clickup ID
-              </label>
-              <label>
-                  <div onClick={evnet=>openClickUp(clickTaskInfo)}>
-                    { clickTaskInfo ? clickTaskInfo.status.status : "" }
-                  </div>
-              </label>
-            </div>
-            <input
-              type="text"
-              id="clickID"
-              value={clickID}
-              defaultValue={clickID}
-              style={{
-                backgroundColor: clickTaskInfo ? clickTaskInfo.status.color : "#FFFFFF"
-              }}
-              onChange={event => setClickID(event.target.value)}
-              className="col-span-2 border border-gray-500 px-4 py-2 rounded-lg"
-            />
-          </div>
-
-          <div className="grid grid-flow-row gap-1 w-100">
-            <div className="grid grid-flow-col gap-1">
-              <label>
-                Sprint
-              </label>
-              <label>
-                  <div onClick={evnet=>openClickUp(clickTaskInfo)}>
-                    { clickTaskInfo ? clickTaskInfo.status.status : "" }
-                  </div>
-              </label>
-            </div>
-            <input
-              type="text"
-              id="sprintNumber"
-              value={sprintNumber}
-              defaultValue={sprintNumber}
-              onChange={event => setSprintNumber(event.target.value)}
-              className="col-span-2 border border-gray-500 px-4 py-2 rounded-lg"
-            />
-          </div>
-          <div className="grid grid-flow-row gap-1 w-70" >
-            <div>
-              <label>
-                ID by URL
-              </label>
-            </div>
-            <input 
-                type="checkbox"
-                defaultChecked={clickupIDUrl}
-                onChange={() => setClickupIDUrl(!clickupIDUrl) }
-                className="border border-gray-500 px-4 py-2 rounded-lg"
-              />
-          </div>
-          
-
-          <div className="grid grid-flow-row gap-1">
-            <div>
-              <label></label>
-            </div>
-            <button 
-              disabled={!localStorage.getItem('Clickup_Refresh_Token') ? true : false}
-              type="button" 
-              className="bg-blue-500 text-white py-2 px-4 rounded-lg ml-4"
-              onClick={handleKeyDownClickup}>
-              Get
-            </button>
-          </div>
+        >
+          Task detail
+        </label>
         </div>
-      </div>
-      <div className="grid grid-flow-row">
-        <div className="grid grid-flow-col gap-1">
-          <label>
-            Clickup Name
-          </label>
-         
-        </div>
-        
-        <input
-          type="text"
-          id="clickupName"
-          value={clickTaskInfo ? clickTaskInfo.name : ""}
-          onClick={handleKeyDownClickup}
-          className="col-span-2 border border-gray-500 px-4 py-2 rounded-lg"
-        />
-      </div>
-      <div className="grid grid-flow-row">
-        <div className="grid grid-flow-col gap-1">
-            <label>
-              Dev Name
-            </label>
-            <button 
-              disabled={!localStorage.getItem('Clickup_Refresh_Token') ? true : false}
-              type="button" 
-              className="bg-blue-500 text-white py-2 px-4 rounded-lg ml-4"
-              onClick={SaveDevelopName}>
-                Save Dev Name
-            </button>
-          </div>
-        <input
-          type="text"
-          id="devName"
-          value={devName}
-          defaultValue={devName}
-          onChange={event => setDevName(event.target.value)}
-          className="col-span-2 border border-gray-500 px-4 py-2 rounded-lg w-full"
-        />
-      </div>
-      <div className="grid grid-flow-row">
-        <div className="grid grid-flow-col gap-1">
-            <label>
-              Blueprint Title Task
-            </label>
-            <div>
-              <Button 
-                disabled={!clickTaskInfo || clickTaskInfo.name == "" ? true : false }
-                onClick={() => {navigator.clipboard.writeText(subjectTask); setCopyTitle("Copied")}}
-                >
-                <div className="grid grid-flow-col gap-1">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 18 20"
-                    strokeWidth={1}
-                    stroke="currentColor"
-                    className="w-6 h-6 mr-2"
-                  >
-                    <path
-                      d={
-                        'M5 9V4.13a2.96 2.96 0 0 0-1.293.749L.879 7.707A2.96 2.96 0 0 0 .13 9H5Zm11.066-9H9.829a2.98 2.98 0 0 0-2.122.879L7 1.584A.987.987 0 0 0 6.766 2h4.3A3.972 3.972 0 0 1 15 6v10h1.066A1.97 1.97 0 0 0 18 14V2a1.97 1.97 0 0 0-1.934-2Z'
-                      }
-                    />
-                    <path
-                      d={
-                        'M11.066 4H7v5a2 2 0 0 1-2 2H0v7a1.969 1.969 0 0 0 1.933 2h9.133A1.97 1.97 0 0 0 13 18V6a1.97 1.97 0 0 0-1.934-2Z'
-                      }
-                    />
-                  </svg>
-                  <span>{copyTitle}</span>
-                </div>
-              
-              </Button>
-            </div>
-            
-          </div>
-        <input
-          type="text"
-          id="subjectTask"
-          value={subjectTask}
-          className="col-span-2 border border-gray-500 px-4 py-2 rounded-lg w-full"
-        />
-      </div>
-      <div className="grid grid-flow-row">
-        <div className="grid grid-flow-col gap-1 pb-1">
+        <div className="grid grid-flow-row">
           <div className="grid grid-flow-col gap-1">
-            <label>
-              Clickup Description
-            </label>
-            <div>
-              <Button 
-                disabled={!clickTaskInfo || clickTaskInfo.description == "" ? true : false }
-                onClick={() => {navigator.clipboard.writeText(taskFullDescription); setCopyDescription("Copied")}}
-                >
-                <div className="grid grid-flow-col gap-1">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 18 20"
-                    strokeWidth={1}
-                    stroke="currentColor"
-                    className="w-6 h-6 mr-2"
-                  >
-                    <path
-                      d={
-                        'M5 9V4.13a2.96 2.96 0 0 0-1.293.749L.879 7.707A2.96 2.96 0 0 0 .13 9H5Zm11.066-9H9.829a2.98 2.98 0 0 0-2.122.879L7 1.584A.987.987 0 0 0 6.766 2h4.3A3.972 3.972 0 0 1 15 6v10h1.066A1.97 1.97 0 0 0 18 14V2a1.97 1.97 0 0 0-1.934-2Z'
-                      }
-                    />
-                    <path
-                      d={
-                        'M11.066 4H7v5a2 2 0 0 1-2 2H0v7a1.969 1.969 0 0 0 1.933 2h9.133A1.97 1.97 0 0 0 13 18V6a1.97 1.97 0 0 0-1.934-2Z'
-                      }
-                    />
-                  </svg>
-                  <span>{copyDescription}</span>
-                </div>
-              
-              </Button>
-            </div>
-            
-          </div>
-        </div>
-       
-        <textarea
-          id="description"
-          rows="8"
-          value={taskFullDescription}
-          onClick={handleKeyDownClickup}
-          className="col-span-2 border border-gray-500 px-4 py-2 rounded-lg"
-        />
-      </div>
-      <div className="grid grid-flow-row">
-        <div className="grid grid-flow-col gap-1">
-          <label>
-            Parent Description
-          </label>
-          
-        </div>
-        
-        <textarea
-          id="description"
-          rows="6"
-          value={clickTaskInfo && clickTaskInfo.parentDetail ? clickTaskInfo.parentDetail.description : ""}
-          onClick={handleKeyDownClickup}
-          className="col-span-2 border border-gray-500 px-4 py-2 rounded-lg"
-        />
-      </div>
-
-      <div className="grid grid-flow-col gap-1 pb-1">
-          <div className="grid grid-flow-col gap-1">
+            <div className="grid grid-flow-row gap-1">
+              <div className="grid grid-flow-col gap-1">
+                <label>
+                  Clickup ID
+                </label>
+                <label>
+                    <div onClick={evnet=>openClickUp(clickTaskInfo)}>
+                      { clickTaskInfo ? clickTaskInfo.status.status : "" }
+                    </div>
+                </label>
+              </div>
               <input
                 type="text"
-                id="clickupRefreshToken"
-                value={clickupRefreshToken}
-                defaultValue={clickupRefreshToken}
+                id="clickID"
+                value={clickID}
+                defaultValue={clickID}
                 style={{
                   backgroundColor: clickTaskInfo ? clickTaskInfo.status.color : "#FFFFFF"
                 }}
-                onChange={event => {setClickupRefreshToken(event.target.value) }}
-                className="col-span-2 border border-gray-500 px-4 py-2 rounded-lg w-full"
+                onChange={event => setClickID(event.target.value)}
+                className="col-span-2 border border-gray-500 px-4 py-2 rounded-lg"
               />
-              <div>
-                <button 
-                  type="button" 
-                  className="bg-blue-500 text-white py-2 px-4 rounded-lg ml-4"
-                  onClick={() => {navigator.clipboard.writeText(clickupRefreshToken); setCopyToken("Copied")}}>
-                    {copyToken}
-                </button>
-                {/* <button 
-                  type="button" 
-                  className="bg-blue-500 text-white py-2 px-4 rounded-lg ml-4"
-                  onClick={() => {setClickupRefreshToken(navigator.clipboard.readText())}}>
-                    Paste
-                </button> */}
-                
-                <button 
-                  disabled={clickupRefreshToken || "APP.CLICKUP.COM" == domain.toUpperCase() ? false : true}
-                  type="button" 
-                  className="bg-blue-500 text-white py-2 px-4 rounded-lg ml-4"
-                  onClick={() => { localStorage.setItem('Clickup_Refresh_Token', clickupRefreshToken);}}>
-                    Save New Token
-                </button>
+            </div>
+
+            <div className="grid grid-flow-row gap-1 w-100">
+              <div className="grid grid-flow-col gap-1">
+                <label>
+                  Sprint
+                </label>
+                <label>
+                    <div onClick={evnet=>openClickUp(clickTaskInfo)}>
+                      { clickTaskInfo ? clickTaskInfo.status.status : "" }
+                    </div>
+                </label>
               </div>
-            
+              <input
+                type="text"
+                id="sprintNumber"
+                value={sprintNumber}
+                defaultValue={sprintNumber}
+                onChange={event => setSprintNumber(event.target.value)}
+                className="col-span-2 border border-gray-500 px-4 py-2 rounded-lg"
+              />
+            </div>
+            <div className="grid grid-flow-row gap-1 w-70" >
+              <div>
+                <label>
+                  ID by URL
+                </label>
+              </div>
+              <input 
+                  type="checkbox"
+                  defaultChecked={clickupIDUrl}
+                  onChange={() => setClickupIDUrl(!clickupIDUrl) }
+                  className="border border-gray-500 px-4 py-2 rounded-lg"
+                />
+            </div>
+
+            <div className="grid grid-flow-row gap-1 w-70" >
+              <div>
+                <label>
+                  JIRA
+                </label>
+              </div>
+              <input 
+                  type="checkbox"
+                  defaultChecked={isJira}
+                  onChange={() => setIsJira(!isJira) }
+                  className="border px-4 py-2 rounded-lg"
+                />
+            </div>
+
+            <div className="grid grid-flow-row gap-1">
+              <div>
+                <label></label>
+              </div>
+              <button 
+                disabled={!localStorage.getItem('Clickup_Refresh_Token') ? true : false}
+                type="button" 
+                className="bg-blue-500 text-white py-2 px-4 rounded-lg ml-4"
+                onClick={handleKeyDownClickup}>
+                Get
+              </button>
+            </div>
           </div>
         </div>
-      
+        <div className="grid grid-flow-row">
+          <div className="grid grid-flow-col gap-1">
+            <label>
+              Clickup Name
+            </label>
+          
+          </div>
+          
+          <input
+            type="text"
+            id="clickupName"
+            value={clickTaskInfo ? clickTaskInfo.name : ""}
+            onClick={handleKeyDownClickup}
+            className="col-span-2 border border-gray-500 px-4 py-2 rounded-lg"
+          />
+        </div>
+        <div className="grid grid-flow-row">
+          <div className="grid grid-flow-col gap-1">
+              <label>
+                Dev Name
+              </label>
+              <button 
+                disabled={!localStorage.getItem('Clickup_Refresh_Token') ? true : false}
+                type="button" 
+                className="bg-blue-500 text-white py-2 px-4 rounded-lg ml-4"
+                onClick={SaveDevelopName}>
+                  Save Dev Name
+              </button>
+            </div>
+          <input
+            type="text"
+            id="devName"
+            value={devName}
+            defaultValue={devName}
+            onChange={event => setDevName(event.target.value)}
+            className="col-span-2 border border-gray-500 px-4 py-2 rounded-lg w-full"
+          />
+        </div>
+        <div className="grid grid-flow-row">
+          <div className="grid grid-flow-col gap-1">
+              <label>
+                Blueprint Title Task
+              </label>
+              <div>
+                <Button 
+                  disabled={!clickTaskInfo || clickTaskInfo.name == "" ? true : false }
+                  onClick={() => {navigator.clipboard.writeText(subjectTask); setCopyTitle("Copied")}}
+                  >
+                  <div className="grid grid-flow-col gap-1">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 18 20"
+                      strokeWidth={1}
+                      stroke="currentColor"
+                      className="w-6 h-6 mr-2"
+                    >
+                      <path
+                        d={
+                          'M5 9V4.13a2.96 2.96 0 0 0-1.293.749L.879 7.707A2.96 2.96 0 0 0 .13 9H5Zm11.066-9H9.829a2.98 2.98 0 0 0-2.122.879L7 1.584A.987.987 0 0 0 6.766 2h4.3A3.972 3.972 0 0 1 15 6v10h1.066A1.97 1.97 0 0 0 18 14V2a1.97 1.97 0 0 0-1.934-2Z'
+                        }
+                      />
+                      <path
+                        d={
+                          'M11.066 4H7v5a2 2 0 0 1-2 2H0v7a1.969 1.969 0 0 0 1.933 2h9.133A1.97 1.97 0 0 0 13 18V6a1.97 1.97 0 0 0-1.934-2Z'
+                        }
+                      />
+                    </svg>
+                    <span>{copyTitle}</span>
+                  </div>
+                
+                </Button>
+              </div>
+              
+            </div>
+          <input
+            type="text"
+            id="subjectTask"
+            value={subjectTask}
+            className="col-span-2 border border-gray-500 px-4 py-2 rounded-lg w-full"
+          />
+        </div>
+        <div className="grid grid-flow-row">
+          <div className="grid grid-flow-col gap-1 pb-1">
+            <div className="grid grid-flow-col gap-1">
+              <label>
+                Clickup Description
+              </label>
+              <div>
+                <Button 
+                  disabled={!clickTaskInfo || clickTaskInfo.description == "" ? true : false }
+                  onClick={() => {navigator.clipboard.writeText(taskFullDescription); setCopyDescription("Copied")}}
+                  >
+                  <div className="grid grid-flow-col gap-1">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 18 20"
+                      strokeWidth={1}
+                      stroke="currentColor"
+                      className="w-6 h-6 mr-2"
+                    >
+                      <path
+                        d={
+                          'M5 9V4.13a2.96 2.96 0 0 0-1.293.749L.879 7.707A2.96 2.96 0 0 0 .13 9H5Zm11.066-9H9.829a2.98 2.98 0 0 0-2.122.879L7 1.584A.987.987 0 0 0 6.766 2h4.3A3.972 3.972 0 0 1 15 6v10h1.066A1.97 1.97 0 0 0 18 14V2a1.97 1.97 0 0 0-1.934-2Z'
+                        }
+                      />
+                      <path
+                        d={
+                          'M11.066 4H7v5a2 2 0 0 1-2 2H0v7a1.969 1.969 0 0 0 1.933 2h9.133A1.97 1.97 0 0 0 13 18V6a1.97 1.97 0 0 0-1.934-2Z'
+                        }
+                      />
+                    </svg>
+                    <span>{copyDescription}</span>
+                  </div>
+                
+                </Button>
+              </div>
+              
+            </div>
+          </div>
+        
+          <textarea
+            id="description"
+            rows="8"
+            value={taskFullDescription}
+            onClick={handleKeyDownClickup}
+            className="col-span-2 border border-gray-500 px-4 py-2 rounded-lg"
+          />
+        </div>
+        <div className="grid grid-flow-row">
+          <div className="grid grid-flow-col gap-1">
+            <label>
+              Parent Description
+            </label>
+            
+          </div>
+          
+          <textarea
+            id="description"
+            rows="6"
+            value={clickTaskInfo && clickTaskInfo.parentDetail ? clickTaskInfo.parentDetail.description : ""}
+            onClick={handleKeyDownClickup}
+            className="col-span-2 border border-gray-500 px-4 py-2 rounded-lg"
+          />
+        </div>
+
+        <div className="grid grid-flow-col gap-1 pb-1">
+            <div className="grid grid-flow-col gap-1">
+                <input
+                  type="text"
+                  id="clickupRefreshToken"
+                  value={clickupRefreshToken}
+                  defaultValue={clickupRefreshToken}
+                  style={{
+                    backgroundColor: clickTaskInfo ? clickTaskInfo.status.color : "#FFFFFF"
+                  }}
+                  onChange={event => {setClickupRefreshToken(event.target.value) }}
+                  className="col-span-2 border border-gray-500 px-4 py-2 rounded-lg w-full"
+                />
+                <div>
+                  <button 
+                    type="button" 
+                    className="bg-blue-500 text-white py-2 px-4 rounded-lg ml-4"
+                    onClick={() => {navigator.clipboard.writeText(clickupRefreshToken); setCopyToken("Copied")}}>
+                      {copyToken}
+                  </button>
+                  {/* <button 
+                    type="button" 
+                    className="bg-blue-500 text-white py-2 px-4 rounded-lg ml-4"
+                    onClick={() => {setClickupRefreshToken(navigator.clipboard.readText())}}>
+                      Paste
+                  </button> */}
+                  
+                  <button 
+                    disabled={clickupRefreshToken || "APP.CLICKUP.COM" == domain.toUpperCase() ? false : true}
+                    type="button" 
+                    className="bg-blue-500 text-white py-2 px-4 rounded-lg ml-4"
+                    onClick={() => { localStorage.setItem('Clickup_Refresh_Token', clickupRefreshToken);}}>
+                      Save New Token
+                  </button>
+                </div>
+              
+            </div>
+          </div>
+          <Modal
+            isOpen={modalIsOpen}
+            onAfterOpen={afterOpenModal}
+            onRequestClose={closeModal}
+            style={customStyles}
+            contentLabel="Example Modal"
+        >
+            <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
+            <button onClick={closeModal}>close</button>
+            <div>I am a modal</div>
+            <form>
+            <input />
+            <button>tab navigation</button>
+            <button>stays</button>
+            <button>inside</button>
+            <button>the modal</button>
+            </form>
+        </Modal>
+        <ScaleLoader
+            color={color}
+            loading={loading}
+            cssOverride={override}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+        />
+        </form>
     </div>
   );
 }
